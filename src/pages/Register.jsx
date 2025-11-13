@@ -2,12 +2,27 @@ import React, { useState } from "react";
 import { FaGoogle } from "react-icons/fa";
 import { HiEye, HiEyeOff } from "react-icons/hi";
 import { Link } from "react-router";
+import Particles from "../components/Particles";
 
 const Register = () => {
   const [show, setShow] = useState(false);
   return (
-    <div  className="p-4">
-      <div className="card bg-color-secondary text-primary w-full margin-y max-w-sm shrink-0 shadow-2xl md:mx-auto">
+    <div  className="p-4 relative">
+        <div className="absolute top-0" style={{ width: "100%", height: "600px" }}>
+        <Particles
+          particleColors={["#ffffff", "#ffffff"]}
+          particleCount={200}
+          particleSpread={10}
+          speed={0.1}
+          particleBaseSize={100}
+          moveParticlesOnHover={true}
+          alphaParticles={false}
+          disableRotation={false}
+        />
+      </div>
+
+
+      <div className="card bg-color-secondary text-primary w-full margin-y max-w-sm shrink-0  md:mx-auto">
         <form className="card-body">
           <h3 className="text-3xl font-bold text-center">Register Now</h3>
           <fieldset className="fieldset ">

@@ -1,9 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
 @import "tailwindcss";
-@plugin "daisyui" {
-  themes: light --default;
-}
+ @plugin "daisyui" {
+   themes: light --default, dark --prefersdark;
+ }
+
 @plugin "daisyui/theme" {
   name: "light";
   default: true;
@@ -12,6 +13,17 @@
   --color-base-200: #f3f3f3;
   --color-base-300: #e7e7e7;
   --color-accent: #706f6f;
+}
+
+@plugin "daisyui/theme" {
+  name: "dark";
+
+  --color-primary: #13b58b; /* lighter teal for dark mode */
+  --color-primary-content: #ffffff; /* keep text white on primary */
+  --color-secondary: #f9c74f;
+  --color-base-200: #1e1e1e;
+  --color-base-300: #2a2a2a;
+  --color-accent: #a3a3a3;
 }
 
 *{
