@@ -8,19 +8,22 @@ import { TiHome } from "react-icons/ti";
 import { Link, NavLink } from "react-router";
 import logo from "/logo.png";
 import { RxCrossCircled } from "react-icons/rx";
+import useAuth from "../hooks/useAuth";
+import toast from "react-hot-toast";
 
 const Navbar = () => {
+  const { user, logOut } = useAuth();
   const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
   const [show, setShow] = useState(false);
-  //   const logOutHandler = () => {
-  //     logOut()
-  //       .then(() => {
-  //         toast.success("Logged Out Successfully");
-  //       })
-  //       .catch((error) => {
-  //         toast.error(error.message || "Something went wrong. Please try again.");
-  //       });
-  //   };
+  const logOutHandler = () => {
+    logOut()
+      .then(() => {
+        toast.success("Logged Out Successfully");
+      })
+      .catch((error) => {
+        toast.error(error.message || "Something went wrong. Please try again.");
+      });
+  };
 
   useEffect(() => {
     const html = document.querySelector("html");
@@ -75,10 +78,11 @@ const Navbar = () => {
         <div className=" navbar-end flex items-center gap-2">
           <div className="hidden lg:flex items-center gap-2">
             <div>
+              {/* theme toggle button */}
               <label className="toggle text-base-content">
                 <input
                   onClick={(e) => themeHandler(e.target.checked)}
-                  checked={theme === "dark" ? true : false}
+                  defaultChecked={theme === "dark" ? true : false}
                   type="checkbox"
                   value="synthwave"
                   className="theme-controller"
@@ -125,17 +129,43 @@ const Navbar = () => {
                 </svg>
               </label>
             </div>
-            <CgProfile size={40} className="text-primary" />
-            <Link
-              to="/login"
-              className="py-2 px-3 font-medium bg-primary text-white"
-            >
-              Login
-            </Link>
+            <div>
+              {user ? (
+                <img
+                  title={user.displayName}
+                  className="size-10 object-cover rounded-full border"
+                  src={user.photoURL}
+                  alt=""
+                />
+              ) : (
+                <CgProfile size={40} />
+              )}
+            </div>
+            {user ? (
+              <button
+                onClick={logOutHandler}
+                className="py-2 px-3 cursor-pointer font-medium bg-primary text-white"
+              >
+                Logout
+              </button>
+            ) : (
+              <Link
+                to="/login"
+                className="py-2 px-3 font-medium bg-primary text-white"
+              >
+                Login
+              </Link>
+            )}
           </div>
-          <RiMenuFill onClick={() => setShow(!show)} size={24} className="xl:hidden"/>
+          <RiMenuFill
+            onClick={() => setShow(!show)}
+            size={24}
+            className="xl:hidden"
+          />
         </div>
       </div>
+
+      {/* aside bar */}
 
       <aside
         className={`bg-base-100 w-80 h-screen p-8 absolute top-0 z-999 flex flex-col items-center transition-all duration-300 shadow-2xl ${
@@ -152,7 +182,7 @@ const Navbar = () => {
           <label className="toggle lg:hidden text-base-content">
             <input
               onClick={(e) => themeHandler(e.target.checked)}
-              checked={theme === "dark" ? true : false}
+              defaultChecked={theme === "dark" ? true : false}
               type="checkbox"
               value="synthwave"
               className="theme-controller"
@@ -200,18 +230,46 @@ const Navbar = () => {
           </label>
         </div>
         <div className="flex flex-col gap-4 items-center">
-          <CgProfile size={40} className="text-primary" />
-          <Link
-            to="/login"
-            className="py-2 px-3 font-medium bg-primary text-white"
-          >
-            Login
-          </Link>
+          <div>
+            {user ? (
+              <img
+                title={user.displayName}
+                className="size-28 object-cover rounded-full border"
+                src={user.photoURL}
+                alt=""
+              />
+            ) : (
+              <CgProfile size={112} />
+            )}
+          </div>
+          <div className="text-xl font-semibold">
+            {user ? <p>{user.displayName}</p> : <p>User</p>}
+          </div>
+          {user ? (
+            <Link className="py-2 px-3 font-medium bg-primary text-white">
+              View Profile
+            </Link>
+          ) : (
+            <Link
+              to="/login"
+              className="py-2 px-3 font-medium bg-primary text-white"
+            >
+              Login
+            </Link>
+          )}
         </div>
         <div className="mt-8">
           <h4 className="text-center mb-4">Menu</h4>
           <div>{links}</div>
         </div>
+        {user && (
+          <button
+            onClick={logOutHandler}
+            className="py-2 px-3 cursor-pointer font-medium bg-primary text-white absolute bottom-8"
+          >
+            Logout
+          </button>
+        )}
       </aside>
     </nav>
   );

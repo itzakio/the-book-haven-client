@@ -7,7 +7,7 @@ import Particles from "../components/Particles";
 const Login = () => {
   const [show, setShow] = useState(false);
   return (
-    <div className="p-4 relative">
+    <div className="p-4 relative ">
       <div className="absolute top-0" style={{ width: "100%", height: "600px" }}>
         <Particles
           particleColors={["#ffffff", "#ffffff"]}
@@ -21,7 +21,7 @@ const Login = () => {
         />
       </div>
 
-      <div className="card text-primary w-full margin-y max-w-sm shrink-0  md:mx-auto">
+      <div className=" card text-primary w-full margin-y max-w-sm shrink-0 mx-auto">
         <form className="card-body">
           <h3 className="text-3xl font-bold text-center">Login Now</h3>
           <fieldset className="fieldset ">
