@@ -130,7 +130,7 @@ const Navbar = () => {
               </label>
             </div>
             <div>
-              {user ? (
+              {user && user.photoURL ? (
                 <img
                   onClick={() => setShow(!show)}
                   title={user.displayName}
@@ -139,7 +139,7 @@ const Navbar = () => {
                   alt=""
                 />
               ) : (
-                <CgProfile size={40} />
+                <CgProfile onClick={() => setShow(!show)} size={40} />
               )}
             </div>
             {user ? (
