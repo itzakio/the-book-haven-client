@@ -132,8 +132,9 @@ const Navbar = () => {
             <div>
               {user ? (
                 <img
+                  onClick={() => setShow(!show)}
                   title={user.displayName}
-                  className="size-10 object-cover rounded-full border"
+                  className="size-10 object-cover rounded-full border cursor-pointer"
                   src={user.photoURL}
                   alt=""
                 />
@@ -258,7 +259,7 @@ const Navbar = () => {
             </Link>
           )}
         </div>
-        <div className="mt-8">
+        <div className="mt-8 xl:hidden">
           <h4 className="text-center mb-4">Menu</h4>
           <div>{links}</div>
         </div>

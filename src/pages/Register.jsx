@@ -35,9 +35,10 @@ const Register = () => {
     <div className="p-4 relative">
       <div
         className="absolute top-0"
-        style={{ width: "100%", height: "600px" }}
+        style={{ width: "100%", height: "100%" }}
       >
         <Particles
+        
           particleColors={["#ffffff", "#ffffff"]}
           particleCount={200}
           particleSpread={10}

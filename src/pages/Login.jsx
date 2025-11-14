@@ -1,14 +1,33 @@
 import React, { useState } from "react";
 import { FaGoogle } from "react-icons/fa";
 import { HiEye, HiEyeOff } from "react-icons/hi";
-import { Link } from "react-router";
+import { Link, useLocation, useNavigate } from "react-router";
 import Particles from "../components/Particles";
+import useAuth from "../hooks/useAuth";
+import toast from "react-hot-toast";
 
 const Login = () => {
+  const { createUser, setUser, updateUser, googleSignIn } = useAuth();
+  const navigate = useNavigate();
+  const location = useLocation();
+
   const [show, setShow] = useState(false);
+  const googleSignInHandler = (e) => {
+    e.preventDefault();
+    googleSignIn()
+      .then((result) => {
+        const user = result.user;
+        setUser(user);
+        toast.success("SignUp successfully");
+        navigate(`${location.state ? location.state : "/"}`);
+      })
+      .catch((error) => {
+        toast.error(error.message || "Something went wrong. Please try again.");
+      });
+  };
   return (
     <div className="p-4 relative ">
-      <div className="absolute top-0" style={{ width: "100%", height: "600px" }}>
+      <div className="absolute top-0" style={{ width: "100%", height: "100%" }}>
         <Particles
           particleColors={["#ffffff", "#ffffff"]}
           particleCount={200}
@@ -64,7 +83,7 @@ const Login = () => {
             </div>
             <p className="text-center text-base">or</p>
             <div className="flex flex-col items-center">
-              <button className="flex items-center justify-center gap-1 cursor-pointer active:scale-98  w-full btn bg-primary text-white">
+              <button onClick={googleSignInHandler} className="flex items-center justify-center gap-1 cursor-pointer active:scale-98  w-full btn bg-primary text-white">
                 <FaGoogle size={16} /> <span>Login with Google</span>
               </button>
             </div>
