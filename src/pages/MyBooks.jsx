@@ -12,7 +12,6 @@ const MyBooks = () => {
     loading,
     error,
   } = useFetchData(`/books?email=${user.email}`);
-  console.log(books)
   if (loading) {
     return <Loading />;
   }

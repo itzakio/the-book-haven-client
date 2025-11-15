@@ -28,7 +28,7 @@ const MyTableRow = ({book, index}) => {
 
                 <td className="text-center space-x-4">
                   <Link
-                    to={`/book-details/${book?.id}`}
+                    to={`/update-book/${book?._id}`}
                     className="btn btn-sm rounded-none btn-outline btn-primary"
                   >
                     Update

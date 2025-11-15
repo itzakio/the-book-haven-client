@@ -3,7 +3,7 @@ import { Link } from 'react-router';
 
 const TableRow = ({book, index}) => {
     return (
-        <tr key={book?.id || index} className="hover">
+        <tr className="hover">
                 <th>{index + 1}</th>
 
                 <td>
@@ -28,7 +28,7 @@ const TableRow = ({book, index}) => {
 
                 <td className="text-center">
                   <Link
-                    to={`/book-details/${book?.id}`}
+                    to={`/book-details/${book?._id}`}
                     className="btn btn-sm rounded-none btn-outline btn-primary"
                   >
                     View Details
