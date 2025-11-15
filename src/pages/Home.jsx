@@ -1,13 +1,10 @@
 import React from 'react';
-import BannerSlider from '../components/BannerSlider';
-import Loading from '../components/Loading';
-import ErrorPage from '../components/ErrorPage';
+import BannerCarousel from '../components/BannerCarousel';
 
 const Home = () => {
     return (
         <div>
-            Home
-            <ErrorPage/>
+            <BannerCarousel/>
         </div>
     );
 };

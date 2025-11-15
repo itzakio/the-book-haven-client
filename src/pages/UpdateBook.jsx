@@ -3,7 +3,7 @@ import toast from "react-hot-toast";
 import useAuth from "../hooks/useAuth";
 import Particles from "../components/Particles";
 import useFetchData from "../hooks/useFetchData";
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import Loading from "../components/Loading";
 import ErrorPage from "../components/ErrorPage";
 
@@ -12,35 +12,35 @@ const UpdateBook = () => {
   const {id} = useParams();
   const {data:book, loading:dataLoading, error} = useFetchData(`/books/${id}`);
   const { user } = useAuth();
+  const navigate = useNavigate();
 
   const updateBookHandler = (e) => {
     e.preventDefault();
     setLoading(true);
 
     const form = e.target;
-    const newBook = {
+    const updatedBook = {
       title: form.title.value,
       author: form.author.value,
       genre: form.genre.value,
       rating: form.rating.value,
       summary: form.summary.value,
       coverImage: form.coverImage.value,
-      userEmail: user.email,
-      created_at: new Date().toISOString(),
     };
 
-    fetch("http://localhost:3000/books", {
-      method: "POST",
+    fetch(`http://localhost:3000/book/${id}`, {
+      method: "PUT",
       headers: { "content-type": "application/json" },
-      body: JSON.stringify(newBook),
+      body: JSON.stringify(updatedBook),
     })
       .then((res) => res.json())
       .then((data) => {
-        toast.success("Book added successfully!");
+        toast.success("Book Updated successfully!");
         form.reset();
-        console.log("after book added", data);
+        navigate(`/book-details/${id}`)
+        console.log("after book update", data);
       })
-      .catch(() => toast.error("Failed to add book!"))
+      .catch(() => toast.error("Failed to update book!"))
       .finally(() => setLoading(false));
   };
 

@@ -12,6 +12,7 @@ const AllBooks = () => {
     return <ErrorPage />;
   }
   
+  
   return (
     <div className="max-w-[1440px] mx-auto margin-y">
       <h2 className="headline">All Books</h2>

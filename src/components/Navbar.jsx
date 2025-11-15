@@ -152,7 +152,7 @@ const Navbar = () => {
             ) : (
               <Link
                 to="/login"
-                className="py-2 px-3 font-medium bg-primary text-white"
+                className="btn rounded-none py-2 px-3 font-medium bg-primary text-white"
               >
                 Login
               </Link>

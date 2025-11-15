@@ -1,44 +1,49 @@
-import React from 'react';
-import { Link } from 'react-router';
+import React from "react";
+import { FaEdit } from "react-icons/fa";
+import { MdDeleteForever } from "react-icons/md";
+import { TbListDetails } from "react-icons/tb";
+import { Link } from "react-router";
 
-const MyTableRow = ({book, index}) => {
-    return (
-        <tr key={book?.id || index} className="hover">
-                <th>{index + 1}</th>
+const MyTableRow = ({ book, index }) => {
+  return (
+    <tr key={book?.id || index} className="hover">
+      <th>{index + 1}</th>
 
-                <td>
-                  <img
-                    src={book?.coverImage}
-                    alt={book?.title}
-                    className="w-14 h-20 object-cover rounded-md shadow"
-                  />
-                </td>
+      <td>
+        <img
+          src={book?.coverImage}
+          alt={book?.title}
+          className="w-14 h-20 object-cover rounded-md shadow"
+        />
+      </td>
 
-                <td className="font-semibold">{book?.title}</td>
+      <td className="font-semibold">{book?.title}</td>
 
-                <td>{book?.author}</td>
+      <td>{book?.author}</td>
 
-                <td>
-                  <span className="badge badge-primary badge-sm text-white">
-                    {book?.genre}
-                  </span>
-                </td>
+      <td>
+        <span className="badge badge-primary badge-sm text-white">
+          {book?.genre}
+        </span>
+      </td>
 
-                <td className="font-semibold">{book?.rating} ⭐</td>
+      <td className="font-semibold">{book?.rating} ⭐</td>
 
-                <td className="text-center space-x-4">
-                  <Link
-                    to={`/update-book/${book?._id}`}
-                    className="btn btn-sm rounded-none btn-outline btn-primary"
-                  >
-                    Update
-                  </Link>
-                  <button className="btn btn-sm rounded-none hover:text-white btn-outline btn-error">
-                    Delete
-                  </button>
-                </td>
-              </tr>
-    );
+      <td>
+        <div className="flex justify-center items-center gap-6 text-primary">
+          <Link className="tooltip" data-tip="View Details" to={`/book-details/${book?._id}`}>
+            <TbListDetails size={24}/>
+          </Link>
+          <Link className="tooltip" data-tip="Edit Book" to={`/update-book/${book?._id}`}>
+            <FaEdit size={24} />
+          </Link>
+          <button data-tip="Delete Book" className="text-red-500 cursor-pointer tooltip">
+            <MdDeleteForever size={30} />
+          </button>
+        </div>
+      </td>
+    </tr>
+  );
 };
 
 export default MyTableRow;
