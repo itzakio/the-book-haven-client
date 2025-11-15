@@ -1,13 +1,17 @@
 import useFetchData from "../hooks/useFetchData";
 import Loading from "../components/Loading";
 import TableRow from "../components/TableRow";
+import ErrorPage from "../components/ErrorPage";
 
 const AllBooks = () => {
   const { data: books, loading, error } = useFetchData("/books");
-  console.log(books);
   if (loading) {
     return <Loading />;
   }
+  if (error) {
+    return <ErrorPage />;
+  }
+  
   return (
     <div className="max-w-[1440px] mx-auto margin-y">
       <h2 className="headline">All Books</h2>
