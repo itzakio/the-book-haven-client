@@ -1,6 +1,6 @@
 import React from "react";
 import useFetchData from "../hooks/useFetchData";
-import { Link, useParams } from "react-router";
+import { Link, useLocation, useParams } from "react-router";
 import Loading from "../components/Loading";
 import ErrorPage from "../components/ErrorPage";
 import { MdOutlineKeyboardDoubleArrowLeft } from "react-icons/md";
@@ -8,7 +8,7 @@ import { MdOutlineKeyboardDoubleArrowLeft } from "react-icons/md";
 const BookDetails = () => {
     const {id} = useParams()
     const {data:book, loading, error} = useFetchData(`/books/${id}`)
-    console.log(book)
+    const location = useLocation();
   const {
     title,
     author,
@@ -40,7 +40,7 @@ const BookDetails = () => {
 
         {/* RIGHT: Book Info */}
         <div className="col-span-1 lg:col-span-2">
-            <Link to="/all-books" className="py-2 px-3 font-medium btn rounded-none btn-outline btn-primary mb-4"><MdOutlineKeyboardDoubleArrowLeft size={20}/>Go Back</Link>
+            <Link to={location.state || "/all-books"} className="py-2 px-3 font-medium btn rounded-none btn-outline btn-primary mb-4"><MdOutlineKeyboardDoubleArrowLeft size={20}/>Go Back</Link>
           <h1 className="text-4xl text-primary font-bold mb-3">{title}</h1>
 
           <div className="space-y-2 text-lg text-gray-700">

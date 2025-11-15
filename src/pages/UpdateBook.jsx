@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 import toast from "react-hot-toast";
-import useAuth from "../hooks/useAuth";
 import Particles from "../components/Particles";
 import useFetchData from "../hooks/useFetchData";
-import { useNavigate, useParams } from "react-router";
+import { useLocation, useNavigate, useParams } from "react-router";
 import Loading from "../components/Loading";
 import ErrorPage from "../components/ErrorPage";
 
@@ -11,8 +10,8 @@ const UpdateBook = () => {
   const [loading, setLoading] = useState(false);
   const {id} = useParams();
   const {data:book, loading:dataLoading, error} = useFetchData(`/books/${id}`);
-  const { user } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
 
   const updateBookHandler = (e) => {
     e.preventDefault();
@@ -37,7 +36,7 @@ const UpdateBook = () => {
       .then((data) => {
         toast.success("Book Updated successfully!");
         form.reset();
-        navigate(`/book-details/${id}`)
+        navigate(`/book-details/${id}`,{state: location.state})
         console.log("after book update", data);
       })
       .catch(() => toast.error("Failed to update book!"))

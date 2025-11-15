@@ -4,7 +4,7 @@ import { MdDeleteForever } from "react-icons/md";
 import { TbListDetails } from "react-icons/tb";
 import { Link } from "react-router";
 
-const MyTableRow = ({ book, index }) => {
+const MyTableRow = ({ book, index, location }) => {
   return (
     <tr key={book?.id || index} className="hover">
       <th>{index + 1}</th>
@@ -31,10 +31,10 @@ const MyTableRow = ({ book, index }) => {
 
       <td>
         <div className="flex justify-center items-center gap-6 text-primary">
-          <Link className="tooltip" data-tip="View Details" to={`/book-details/${book?._id}`}>
+          <Link state={location.pathname} className="tooltip" data-tip="View Details" to={`/book-details/${book?._id}`}>
             <TbListDetails size={24}/>
           </Link>
-          <Link className="tooltip" data-tip="Edit Book" to={`/update-book/${book?._id}`}>
+          <Link state={location.pathname} className="tooltip" data-tip="Edit Book" to={`/update-book/${book?._id}`}>
             <FaEdit size={24} />
           </Link>
           <button data-tip="Delete Book" className="text-red-500 cursor-pointer tooltip">

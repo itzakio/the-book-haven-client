@@ -4,9 +4,12 @@ import useAuth from "../hooks/useAuth";
 import Loading from "../components/Loading";
 import ErrorPage from "../components/ErrorPage";
 import MyTableRow from "../components/MyTableRow";
+import { useLocation } from "react-router";
 
 const MyBooks = () => {
   const { user } = useAuth();
+  const location = useLocation();
+
   const {
     data: books,
     loading,
@@ -37,7 +40,7 @@ const MyBooks = () => {
 
           <tbody>
             {books.map((book, index) => (
-              <MyTableRow key={book._id} book={book} index={index} />
+              <MyTableRow location={location} key={book._id} book={book} index={index} />
             ))}
           </tbody>
         </table>

@@ -28,6 +28,7 @@ const TableRow = ({book, index}) => {
 
                 <td className="text-center">
                   <Link
+                 
                     to={`/book-details/${book?._id}`}
                     className="btn btn-sm rounded-none btn-outline btn-primary"
                   >
