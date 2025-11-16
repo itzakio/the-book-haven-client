@@ -5,7 +5,7 @@ import styled from "styled-components";
 const Card = ({ book }) => {
   return (
     <StyledWrapper>
-      <div className="card h-full relative group">
+      <div className="card rounded-none h-full relative group">
         <img
           className="w-80 h-full object-cover brightness-50 xl:brightness-100 xl:group-hover:brightness-50"
           src={book.coverImage}
@@ -28,7 +28,6 @@ const Card = ({ book }) => {
 const StyledWrapper = styled.div`
   .card {
     background-color: #4158d0;
-    border-radius: 8px;
     color: white;
     overflow: hidden;
     position: relative;

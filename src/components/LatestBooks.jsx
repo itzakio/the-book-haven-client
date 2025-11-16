@@ -25,9 +25,9 @@ const LatestBooks = () => {
       </div>
       <Link
         to="/all-books"
-        className="btn btn-sm rounded-none btn-outline btn-primary"
+        className="btn rounded-none btn-outline btn-primary"
       >
-        Show All
+        Show All Books
       </Link>
     </div>
   );
