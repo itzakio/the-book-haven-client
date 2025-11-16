@@ -2,11 +2,11 @@ import useFetchData from "../hooks/useFetchData";
 import Loading from "../components/Loading";
 import TableRow from "../components/TableRow";
 import ErrorPage from "../components/ErrorPage";
-import { useLocation } from "react-router";
+
 
 const AllBooks = () => {
   const { data: books, loading, error } = useFetchData("/books");
-  const location = useLocation();
+
 
   if (loading) {
     return <Loading />;
@@ -34,7 +34,7 @@ const AllBooks = () => {
 
           <tbody>
             {books.map((book, index) => (
-              <TableRow location={location} key={book._id} book={book} index={index} />
+              <TableRow  key={book._id} book={book} index={index} />
             ))}
           </tbody>
         </table>
