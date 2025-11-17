@@ -9,8 +9,8 @@ import { TbBrandYoutubeFilled } from "react-icons/tb";
 
 const Footer = () => {
   return (
-    <div className=" p-10 max-w-[1440px] mx-auto">
-      <div className="footer sm:footer-horizontal">
+    <div className=" p-10 max-w-[1440px] mx-auto margin-top">
+      <div className="footer sm:footer-horizontal border-t border-accent pt-8">
         <div>
         <img className="size-28" src={logo} alt="" />
         <p className="text-4xl font-bold mb-2 text-primary">The Book Haven</p>

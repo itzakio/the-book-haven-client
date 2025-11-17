@@ -2,10 +2,12 @@ import React, { useState } from "react";
 import toast from "react-hot-toast";
 import useAuth from "../hooks/useAuth";
 import Particles from "../components/Particles";
+import useAxiosSecure from "../hooks/useAxiosSecure";
 
 const AddBook = () => {
   const [loading, setLoading] = useState(false);
   const { user } = useAuth();
+  const axiosSecure = useAxiosSecure();
 
   const handleAddBook = (e) => {
     e.preventDefault();
@@ -23,19 +25,29 @@ const AddBook = () => {
       created_at: new Date().toISOString(),
     };
 
-    fetch("http://localhost:3000/books", {
-      method: "POST",
-      headers: { "content-type": "application/json" },
-      body: JSON.stringify(newBook),
-    })
-      .then((res) => res.json())
+    axiosSecure
+      .post("/books", newBook)
       .then((data) => {
         toast.success("Book added successfully!");
         form.reset();
-        console.log("after book added", data);
+        console.log("after book added", data.data);
       })
       .catch(() => toast.error("Failed to add book!"))
       .finally(() => setLoading(false));
+
+    // fetch("http://localhost:3000/books", {
+    //   method: "POST",
+    //   headers: { "content-type": "application/json" },
+    //   body: JSON.stringify(newBook),
+    // })
+    //   .then((res) => res.json())
+    //   .then((data) => {
+    //     toast.success("Book added successfully!");
+    //     form.reset();
+    //     console.log("after book added", data);
+    //   })
+    //   .catch(() => toast.error("Failed to add book!"))
+    //   .finally(() => setLoading(false));
   };
 
   return (

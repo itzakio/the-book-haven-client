@@ -1,12 +1,19 @@
-import { useState } from "react";
-import useFetchData from "../hooks/useFetchData";
+import { useEffect, useState } from "react";
 import Loading from "../components/Loading";
 import ErrorPage from "../components/ErrorPage";
 import TableRow from "../components/TableRow";
+import useFetchDataSecure from "../hooks/useFetchDataSecure";
 
 const AllBooks = () => {
-  const { data: books, loading, error } = useFetchData("/books");
+  const { data: allBooks, loading, error } = useFetchDataSecure("/books");
+  const [books, setBooks] = useState([]);
   const [sortOrder, setSortOrder] = useState("default");
+
+  useEffect(() => {
+    if (allBooks) {
+      setBooks(allBooks);
+    }
+  }, [allBooks]);
 
   if (loading) return <Loading />;
   if (error) return <ErrorPage />;
@@ -25,9 +32,9 @@ const AllBooks = () => {
     <div className="max-w-[1440px] mx-auto margin-y">
       <h2 className="headline">All Books</h2>
 
-      <div className="flex w-48 justify-end mt-4">
+      <div className="flex justify-center md:justify-end mt-4 px-5">
         <select
-          className="select select-bordered w-full max-w-xs"
+          className="select select-bordered w-48 max-w-xs"
           value={sortOrder}
           onChange={(e) => setSortOrder(e.target.value)}
         >

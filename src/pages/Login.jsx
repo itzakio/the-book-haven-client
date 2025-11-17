@@ -67,7 +67,7 @@ const Login = () => {
 
   return (
     <div className="p-4 relative ">
-      <div className="absolute top-0" style={{ width: "100%", height: "100%" }}>
+      <div className="absolute top-0" style={{ width: "98%", height: "100%" }}>
         <Particles
           particleColors={["#ffffff", "#ffffff"]}
           particleCount={200}

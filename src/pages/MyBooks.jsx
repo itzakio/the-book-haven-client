@@ -1,21 +1,22 @@
 import React, { useEffect, useState } from "react";
-import useFetchData from "../hooks/useFetchData";
 import useAuth from "../hooks/useAuth";
 import Loading from "../components/Loading";
 import ErrorPage from "../components/ErrorPage";
 import MyTableRow from "../components/MyTableRow";
 import { useLocation } from "react-router";
 import Swal from "sweetalert2";
-import toast from "react-hot-toast";
+import useAxiosSecure from "../hooks/useAxiosSecure";
+import useFetchDataSecure from "../hooks/useFetchDataSecure";
 
 const MyBooks = () => {
   const { user } = useAuth();
   const location = useLocation();
+  const axiosSecure = useAxiosSecure();
   const {
     data: userBooks,
     loading,
     error,
-  } = useFetchData(`/books?email=${user.email}`);
+  } = useFetchDataSecure(`/books?email=${user.email}`);
   const [books, setBooks] = useState(userBooks || []);
 
   useEffect(() => {
@@ -35,12 +36,13 @@ const MyBooks = () => {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        fetch(`http://localhost:3000/books/${id}`, {
-          method: "DELETE",
-        })
-          .then((res) => res.json())
-          .then((data) => {
-            if (data.deletedCount) {
+        // fetch(`http://localhost:3000/books/${id}`, {
+        //   method: "DELETE",
+        // })
+        //   .then((res) => res.json())
+        axiosSecure.delete(`/books/${id}`)
+        .then((data) => {
+            if (data.data.deletedCount) {
               Swal.fire({
                 title: "Deleted!",
                 text: "Your Book has been deleted.",
@@ -50,7 +52,7 @@ const MyBooks = () => {
               setBooks(remainingBooks);
             }
           })
-          .catch(() => {});
+          .catch((error) => {console.log(error)});
       }
     });
   };

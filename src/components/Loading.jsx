@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 const Loading = () => {
   return (
-    <StyledWrapper>
+    <StyledWrapper className='min-h-screen'>
       <div className="loader bg" />
     </StyledWrapper>
   );

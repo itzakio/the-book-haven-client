@@ -5,11 +5,17 @@ import useFetchData from "../hooks/useFetchData";
 import { useLocation, useNavigate, useParams } from "react-router";
 import Loading from "../components/Loading";
 import ErrorPage from "../components/ErrorPage";
+import useAxiosSecure from "../hooks/useAxiosSecure";
 
 const UpdateBook = () => {
+  const axiosSecure = useAxiosSecure();
   const [loading, setLoading] = useState(false);
-  const {id} = useParams();
-  const {data:book, loading:dataLoading, error} = useFetchData(`/books/${id}`);
+  const { id } = useParams();
+  const {
+    data: book,
+    loading: dataLoading,
+    error,
+  } = useFetchData(`/books/${id}`);
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -27,20 +33,31 @@ const UpdateBook = () => {
       coverImage: form.coverImage.value,
     };
 
-    fetch(`http://localhost:3000/book/${id}`, {
-      method: "PUT",
-      headers: { "content-type": "application/json" },
-      body: JSON.stringify(updatedBook),
-    })
-      .then((res) => res.json())
+    axiosSecure
+      .put(`/book/${id}`, updatedBook)
       .then((data) => {
         toast.success("Book Updated successfully!");
         form.reset();
-        navigate(`/book-details/${id}`,{state: location.state})
+        navigate(`/book-details/${id}`, { state: location.state });
         console.log("after book update", data);
       })
       .catch(() => toast.error("Failed to update book!"))
       .finally(() => setLoading(false));
+
+    // fetch(`http://localhost:3000/book/${id}`, {
+    //   method: "PUT",
+    //   headers: { "content-type": "application/json" },
+    //   body: JSON.stringify(updatedBook),
+    // })
+    //   .then((res) => res.json())
+    //   .then((data) => {
+    //     toast.success("Book Updated successfully!");
+    //     form.reset();
+    //     navigate(`/book-details/${id}`,{state: location.state})
+    //     console.log("after book update", data);
+    //   })
+    //   .catch(() => toast.error("Failed to update book!"))
+    //   .finally(() => setLoading(false));
   };
 
   if (dataLoading) {
@@ -70,7 +87,10 @@ const UpdateBook = () => {
       <div className="max-w-2xl mx-auto p-6 margin-y ">
         <h2 className="headline margin-bottom">Update Your Book Info</h2>
 
-        <form onSubmit={updateBookHandler} className="space-y-4 text-primary z-999">
+        <form
+          onSubmit={updateBookHandler}
+          className="space-y-4 text-primary z-999"
+        >
           {/* Title */}
           <div className="form-control">
             <label className="text-base label font-semibold">Book Title</label>

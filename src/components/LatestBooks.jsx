@@ -7,7 +7,6 @@ import Card from "./Card";
 
 const LatestBooks = () => {
   const { data: books, loading, error } = useFetchData("/latest-books");
-  console.log(books);
 
   if (loading) {
     return <Loading />;
