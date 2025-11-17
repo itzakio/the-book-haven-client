@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const axiosInstance = axios.create({
-  baseURL: "http://localhost:3000",
+  baseURL: "https://the-book-haven-server-plum.vercel.app",
 });
 
 const useAxios = () => {

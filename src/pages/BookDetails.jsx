@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import useFetchData from "../hooks/useFetchData";
-import { Link, useLocation, useParams } from "react-router";
+import { Link, useLocation, useNavigate, useParams } from "react-router";
 import Loading from "../components/Loading";
 import ErrorPage from "../components/ErrorPage";
 import { MdOutlineKeyboardDoubleArrowLeft } from "react-icons/md";
@@ -9,19 +9,20 @@ import useAuth from "../hooks/useAuth";
 import useAxiosSecure from "../hooks/useAxiosSecure";
 import toast from "react-hot-toast";
 import useFetchDataSecure from "../hooks/useFetchDataSecure";
+import Swal from "sweetalert2";
 
 const BookDetails = () => {
   const axiosSecure = useAxiosSecure();
   const location = useLocation();
+  const navigate = useNavigate();
   const { id } = useParams();
-  const { user } = useAuth();
+  const { user, userLoading } = useAuth();
   const { data: book, loading, error } = useFetchData(`/books/${id}`);
   const {
     data: comments,
     loading: commentsLoading,
     error: commentError,
   } = useFetchDataSecure(`/comments/${id}`);
-  console.log(comments);
   const [allComments, setAllComments] = useState([]);
   useEffect(() => {
     if (comments) {
@@ -47,21 +48,58 @@ const BookDetails = () => {
       userPhoto: user.photoURL,
       userComment: e.target.comment.value,
       bookId: id,
-      created_at: new Date().toISOString()
+      created_at: new Date().toISOString(),
     };
-    console.log("commented for this book", newComment);
     axiosSecure
       .post("comments", newComment)
       .then((data) => {
-        toast.success("Commented successfully!");
-        e.target.reset();
-        setAllComments([newComment,...comments])
-        console.log("after comment added", data.data);
+        if (data.data.insertedId) {
+          newComment._id = data.data.insertedId
+          toast.success("Commented successfully!");
+          e.target.reset();
+          setAllComments([newComment, ...comments]);
+        }
       })
       .catch(() => toast.error("Failed to comment!"));
   };
 
-  if (loading || commentsLoading) {
+  const bookDeleteHandler = (id) => {
+    Swal.fire({
+      title: "Are you sure ?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // fetch(`http://localhost:3000/books/${id}`, {
+        //   method: "DELETE",
+        // })
+        //   .then((res) => res.json())
+        axiosSecure
+          .delete(`/books/${id}`)
+          .then((data) => {
+            if (data.data.deletedCount) {
+              Swal.fire({
+                title: "Deleted!",
+                text: "Your Book has been deleted.",
+                icon: "success",
+              });
+              navigate(location.state ? location.state : "/all-books");
+            }
+          })
+          .catch((error) => {
+            if (error) {
+              toast.error("Failed to Delete!");
+            }
+          });
+      }
+    });
+  };
+
+  if (loading || commentsLoading || userLoading) {
     return <Loading />;
   }
   if (error || commentError) {
@@ -130,18 +168,24 @@ const BookDetails = () => {
               Add to Wishlist
             </button>
           </div>
-         {
-          user.email === userEmail &&
-           <div className="mt-4 flex gap-4">
-            <button className="py-2 px-3 font-medium btn rounded-none bg-primary cursor-pointer text-white">
-              Update
-            </button>
-            <button className="py-2 px-3 font-medium btn rounded-none btn-outline btn-error hover:text-white">
-              Delete
-            </button>
-          </div>
-
-         }
+          {user.email === userEmail && (
+            <div className="mt-4 flex gap-4">
+              <Link
+                state={location.pathname}
+                className="py-2 px-3 font-medium btn rounded-none bg-primary cursor-pointer text-white"
+                data-tip="Edit Book"
+                to={`/update-book/${book?._id}`}
+              >
+                Update
+              </Link>
+              <button
+                onClick={() => bookDeleteHandler(book?._id)}
+                className="py-2 px-3 font-medium btn rounded-none btn-outline btn-error hover:text-white"
+              >
+                Delete
+              </button>
+            </div>
+          )}
         </div>
       </div>
       {/* comment section */}
@@ -172,10 +216,10 @@ const BookDetails = () => {
                 alt={comment.userName}
               />
               <div>
-                <h4 className="font-semibold text-primary">{comment.userName}</h4>
-                <p className="text-accent">
-                  {comment.userComment}
-                </p>
+                <h4 className="font-semibold text-primary">
+                  {comment.userName}
+                </h4>
+                <p className="text-accent">{comment.userComment}</p>
               </div>
             </div>
           ))}

@@ -3,7 +3,7 @@ import useAuth from "./useAuth";
 import { useEffect } from "react";
 
 const axiosInstance = axios.create({
-  baseURL: "http://localhost:3000",
+  baseURL: "https://the-book-haven-server-plum.vercel.app",
 });
 
 const useAxiosSecure = () => {
@@ -11,11 +11,13 @@ const useAxiosSecure = () => {
 
   useEffect(() => {
      const requestInterceptor = axiosInstance.interceptors.request.use((config) => {
+      if(!user){
+        return;
+      }
       const token = user.accessToken;
       if(token){
         config.headers.authorization = `Bearer ${token}`;
       }
-      console.log(config)
       return config;
     });
 

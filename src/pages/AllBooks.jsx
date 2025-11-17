@@ -2,12 +2,14 @@ import { useEffect, useState } from "react";
 import Loading from "../components/Loading";
 import ErrorPage from "../components/ErrorPage";
 import TableRow from "../components/TableRow";
-import useFetchDataSecure from "../hooks/useFetchDataSecure";
+import useFetchData from "../hooks/useFetchData";
+import { useLocation } from "react-router";
 
 const AllBooks = () => {
-  const { data: allBooks, loading, error } = useFetchDataSecure("/books");
+  const { data: allBooks, loading, error } = useFetchData("/books");
   const [books, setBooks] = useState([]);
   const [sortOrder, setSortOrder] = useState("default");
+  const location = useLocation();
 
   useEffect(() => {
     if (allBooks) {
@@ -60,7 +62,7 @@ const AllBooks = () => {
 
           <tbody>
             {sortedBooks.map((book, index) => (
-              <TableRow key={book._id} book={book} index={index} />
+              <TableRow location={location} key={book._id} book={book} index={index} />
             ))}
           </tbody>
         </table>

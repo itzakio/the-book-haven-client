@@ -36,28 +36,14 @@ const UpdateBook = () => {
     axiosSecure
       .put(`/book/${id}`, updatedBook)
       .then((data) => {
-        toast.success("Book Updated successfully!");
-        form.reset();
-        navigate(`/book-details/${id}`, { state: location.state });
-        console.log("after book update", data);
+        if (data.data.modifiedCount) {
+          toast.success("Book Updated successfully!");
+          form.reset();
+          navigate(`/book-details/${id}`, { state: location.state });
+        }
       })
       .catch(() => toast.error("Failed to update book!"))
       .finally(() => setLoading(false));
-
-    // fetch(`http://localhost:3000/book/${id}`, {
-    //   method: "PUT",
-    //   headers: { "content-type": "application/json" },
-    //   body: JSON.stringify(updatedBook),
-    // })
-    //   .then((res) => res.json())
-    //   .then((data) => {
-    //     toast.success("Book Updated successfully!");
-    //     form.reset();
-    //     navigate(`/book-details/${id}`,{state: location.state})
-    //     console.log("after book update", data);
-    //   })
-    //   .catch(() => toast.error("Failed to update book!"))
-    //   .finally(() => setLoading(false));
   };
 
   if (dataLoading) {

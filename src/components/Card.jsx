@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router";
 import styled from "styled-components";
 
-const Card = ({ book }) => {
+const Card = ({ book, location }) => {
   return (
     <StyledWrapper>
       <div className="card rounded-none h-full relative group">
@@ -14,6 +14,7 @@ const Card = ({ book }) => {
         <div className="flex flex-col items-center absolute top-2/3 left-1/2 -translate-1/2 space-y-4 xl:opacity-0 group-hover:opacity-100 transition-all duration-200">
           <h2 className="text-xl font-semibold text-center">{book.title}</h2>
           <Link
+          state={location.pathname}
             to={`/book-details/${book?._id}`}
             className="btn btn-sm rounded-none btn-outline"
           >
