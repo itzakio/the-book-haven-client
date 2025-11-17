@@ -1,16 +1,32 @@
-# React + Vite
+> ## **The Book Haven** 
+> **Explore Knowledge. Anytime. Anywhere.**
+- Logo : <br>
+<img src="./public/logo.png" alt="The Book Haven" style="width:150px;" />
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+### Description: 
+**Welcome to The Book Haven – Explore Knowledge. Anytime. Anywhere!**
+<br/>
+The Book Haven is an online reading sanctuary created for readers who believe every story opens a new world. Whether you’re a devoted book lover or a curious explorer, our platform offers a peaceful experience to dive into imagination.
 
-Currently, two official plugins are available:
+Discover beautifully curated collections, explore new favorites, and enjoy distraction-free reading—all in one friendly and modern platform.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+**Key Features:**
+- Browse latest and book of the week books on the Home page.
+- View details of the book to clicking view details button.
+- View all books in the All Books page.
+- You can add books from the Add Book page.
+- You can delete or update your book
+- Comment on any users book from Book Details page.
+- Personalized User Accounts with email, password and google signUp.
+- Snow Safety & Gear Shop (Coming Soon).
 
-## React Compiler
+### Technologies: 
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- Frontend: React.js
+- State Management: React Hooks (useState, useEffect, CustomHooks)
+- Authentication: Firebase Authentication (Email Password and Google)
+- Styling: CSS / Tailwind CSS
+- Routing: React Router
+- Optional: Libraries for UI components (daisyUI, React Icon, React Hot Toast, SwiperJS, Sweet Alert 2, UiVerse )
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+Live Link: https://the-book-haven-c4496.web.app

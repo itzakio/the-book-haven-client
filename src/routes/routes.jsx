@@ -9,11 +9,13 @@ import Register from "../pages/Register";
 import PrivateRoute from "./PrivateRoute";
 import BookDetails from "../pages/BookDetails";
 import UpdateBook from "../pages/UpdateBook";
+import ErrorRoutePage from "../components/ErrorRoutePage";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <RootLayout />,
+    errorElement: <ErrorRoutePage/>,
     children: [
       {
         index: true,
@@ -65,6 +67,10 @@ const router = createBrowserRouter([
       },
     ],
   },
+  {
+    path: "*",
+    element: <ErrorRoutePage/>
+  }
 ]);
 
 export default router;
