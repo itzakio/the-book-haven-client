@@ -83,7 +83,7 @@ const BannerCarousel = () => {
                 </Link>
 
                 <Link
-                  to="/add-book"
+                  to="/dashboard/add-book"
                   className="btn btn-outline rounded-none py-2 px-3 font-medium hover:bg-primary text-white"
                 >
                   Create Book

@@ -1,20 +1,24 @@
 import { useEffect, useState } from "react";
 import { BiBookAdd, BiSolidBookAdd } from "react-icons/bi";
 import { CgProfile } from "react-icons/cg";
-import {  RiMenuFill } from "react-icons/ri";
+import { RiMenuFill } from "react-icons/ri";
 import { Link, NavLink } from "react-router";
 import logo from "/logo.png";
 import { RxCrossCircled } from "react-icons/rx";
 import useAuth from "../hooks/useAuth";
 import toast from "react-hot-toast";
 import { FiInfo } from "react-icons/fi";
-import { LiaAddressBookSolid, LiaBookSolid, LiaFileContractSolid } from "react-icons/lia";
+import {
+  LiaAddressBookSolid,
+  LiaBookSolid,
+  LiaFileContractSolid,
+} from "react-icons/lia";
 import { GoHome } from "react-icons/go";
 
 const Navbar = () => {
   const { user, logOut } = useAuth();
-  const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
   const [show, setShow] = useState(false);
+  const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
   const logOutHandler = () => {
     logOut()
       .then(() => {
@@ -50,9 +54,13 @@ const Navbar = () => {
       <NavLink className="navLinks" to="/terms">
         <LiaFileContractSolid size={16} /> Terms
       </NavLink>
-      <NavLink className="navLinks" to="/dashboard">
-        <LiaFileContractSolid size={16} /> Dashboard
-      </NavLink>
+      {user && (
+        <>
+          <NavLink className="navLinks" to="/dashboard">
+            <LiaFileContractSolid size={16} /> Dashboard
+          </NavLink>
+        </>
+      )}
     </>
   );
   return (

@@ -1,14 +1,20 @@
 import React from "react";
 import useAxios from "../hooks/useAxios";
 import { useQuery } from "@tanstack/react-query";
-import { Link, useParams } from "react-router";
+import { Link, useNavigate, useParams } from "react-router";
 import Loading from "../components/Loading";
 import ErrorPage from "../components/ErrorPage";
 import { MdOutlineKeyboardDoubleArrowLeft } from "react-icons/md";
+import useAuth from "../hooks/useAuth";
+import Swal from "sweetalert2";
+import useAxiosSecure from "../hooks/useAxiosSecure";
 
 const BookDetails = () => {
   const axiosInstance = useAxios();
+  const axiosSecure = useAxiosSecure();
   const { id } = useParams();
+  const { user } = useAuth();
+  const navigate = useNavigate();
 
   const {
     data: book = {},
@@ -33,6 +39,46 @@ const BookDetails = () => {
     created_at,
   } = book;
 
+
+
+  const bookDeleteHandler = (id) => {
+    Swal.fire({
+      title: "Are you sure ?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axiosSecure
+          .delete(`/books/${id}`)
+          .then((data) => {
+            if (data.data.deletedCount) {
+              Swal.fire({
+                title: "Deleted!",
+                text: "Your Book has been deleted.",
+                icon: "success",
+              });
+              navigate('/dashboard/my-books')
+            }
+          })
+          .catch((error) => {
+            if (error) {
+              Swal.fire({
+                position: "center",
+                icon: "error",
+                title: "Failed to delete book",
+                showConfirmButton: false,
+                timer: 1500,
+              });
+            }
+          });
+      }
+    });
+  };
+
   if (isLoading) {
     return <Loading />;
   }
@@ -41,7 +87,7 @@ const BookDetails = () => {
   }
 
   return (
-    <section className="max-w-6xl mx-auto px-6 py-12"> 
+    <section className="max-w-6xl mx-auto px-6 py-12">
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-10 items-start">
         {/* LEFT: Cover Image */}
         <div className="w-full">
@@ -103,7 +149,7 @@ const BookDetails = () => {
               Add to Wishlist
             </button>
           </div>
-          {/* {user.email === userEmail && (
+          {user && (
             <div className="mt-4 flex gap-4">
               <Link
                 state={location.pathname}
@@ -114,13 +160,13 @@ const BookDetails = () => {
                 Update
               </Link>
               <button
-                // onClick={() => bookDeleteHandler(book?._id)}
+                onClick={() => bookDeleteHandler(book?._id)}
                 className="py-2 px-3 font-medium btn rounded-none btn-outline btn-error hover:text-white"
               >
                 Delete
               </button>
             </div>
-          )} */}
+          )}
         </div>
       </div>
     </section>

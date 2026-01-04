@@ -34,7 +34,7 @@ const MyTableRow = ({ book, index, location,bookDeleteHandler }) => {
           <Link state={location.pathname} className="tooltip" data-tip="View Details" to={`/book-details/${book?._id}`}>
             <TbListDetails size={24}/>
           </Link>
-          <Link state={location.pathname} className="tooltip" data-tip="Edit Book" to={`/update-book/${book?._id}`}>
+          <Link state={location.pathname} className="tooltip" data-tip="Edit Book" to={`/dashboard/update-book/${book?._id}`}>
             <FaEdit size={24} />
           </Link>
           <button onClick={()=>bookDeleteHandler(book._id)} data-tip="Delete Book" className="text-red-500 cursor-pointer tooltip">

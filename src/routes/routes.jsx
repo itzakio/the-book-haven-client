@@ -42,14 +42,6 @@ const router = createBrowserRouter([
         element: <BookDetails />,
       },
       {
-        path: "update-book/:id",
-        element: (
-          <PrivateRoute>
-            <UpdateBook />
-          </PrivateRoute>
-        ),
-      },
-      {
         path: "login",
         element: <Login />,
       },
@@ -61,11 +53,11 @@ const router = createBrowserRouter([
   },
   {
     path: "dashboard",
-    element: <DashboardLayout />,
+    element: <PrivateRoute><DashboardLayout /></PrivateRoute>,
     children: [
       {
         index: true,
-        element: <DashboardHome/>
+        element: <PrivateRoute><DashboardHome/></PrivateRoute>
       },
       {
         path: "add-book",
@@ -80,6 +72,14 @@ const router = createBrowserRouter([
         element: (
           <PrivateRoute>
             <MyBooks />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "update-book/:id",
+        element: (
+          <PrivateRoute>
+            <UpdateBook />
           </PrivateRoute>
         ),
       },

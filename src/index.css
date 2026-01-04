@@ -72,3 +72,18 @@ nav a.active{
 .title-footer{
   @apply text-xl mb-2 font-semibold text-primary
 }
+
+/* swal button */
+.swal-confirm {
+  color: #000 !important; 
+  background-color: #108F6C !important;
+}
+
+.swal-cancel {
+  color: #fff !important;
+  background-color: #ff0000 !important;
+}
+
+.swal-text {
+  color: #03373D !important; /* description text color */
+}

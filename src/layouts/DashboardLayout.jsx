@@ -3,9 +3,15 @@ import logo from "/logo.png";
 import { Link, NavLink, Outlet } from "react-router";
 import { BiBookAdd } from "react-icons/bi";
 import { LiaAddressBookSolid } from "react-icons/lia";
+import useAuth from "../hooks/useAuth";
+import { CgProfile } from "react-icons/cg";
+import { Toaster } from "react-hot-toast";
 
 const DashboardLayout = () => {
+  const { user, logOut } = useAuth();
+  const [show, setShow] = useState(false);
   const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
+  
   useEffect(() => {
     const html = document.querySelector("html");
     html.setAttribute("data-theme", theme);
@@ -15,6 +21,13 @@ const DashboardLayout = () => {
   const themeHandler = (checked) => {
     setTheme(checked ? "dark" : "light");
   };
+
+
+  useEffect(() => {
+    const handleOutside = () => setShow(false);
+    if (show) document.addEventListener("click", handleOutside);
+    return () => document.removeEventListener("click", handleOutside);
+  }, [show]);
 
   return (
     <div className="drawer lg:drawer-open">
@@ -57,56 +70,116 @@ const DashboardLayout = () => {
               </div>
             </div>
           </div>
+          <div className="flex items-center gap-2">
+            <label className="toggle text-base-content">
+              <input
+                onClick={(e) => themeHandler(e.target.checked)}
+                defaultChecked={theme === "dark" ? true : false}
+                type="checkbox"
+                value="synthwave"
+                className="theme-controller"
+              />
 
-          <label className="toggle text-base-content">
-            <input
-              onClick={(e) => themeHandler(e.target.checked)}
-              defaultChecked={theme === "dark" ? true : false}
-              type="checkbox"
-              value="synthwave"
-              className="theme-controller"
-            />
-
-            <svg
-              aria-label="sun"
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-            >
-              <g
-                strokeLinejoin="round"
-                strokeLinecap="round"
-                strokeWidth="2"
-                fill="none"
-                stroke="currentColor"
+              <svg
+                aria-label="sun"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
               >
-                <circle cx="12" cy="12" r="4"></circle>
-                <path d="M12 2v2"></path>
-                <path d="M12 20v2"></path>
-                <path d="m4.93 4.93 1.41 1.41"></path>
-                <path d="m17.66 17.66 1.41 1.41"></path>
-                <path d="M2 12h2"></path>
-                <path d="M20 12h2"></path>
-                <path d="m6.34 17.66-1.41 1.41"></path>
-                <path d="m19.07 4.93-1.41 1.41"></path>
-              </g>
-            </svg>
+                <g
+                  strokeLinejoin="round"
+                  strokeLinecap="round"
+                  strokeWidth="2"
+                  fill="none"
+                  stroke="currentColor"
+                >
+                  <circle cx="12" cy="12" r="4"></circle>
+                  <path d="M12 2v2"></path>
+                  <path d="M12 20v2"></path>
+                  <path d="m4.93 4.93 1.41 1.41"></path>
+                  <path d="m17.66 17.66 1.41 1.41"></path>
+                  <path d="M2 12h2"></path>
+                  <path d="M20 12h2"></path>
+                  <path d="m6.34 17.66-1.41 1.41"></path>
+                  <path d="m19.07 4.93-1.41 1.41"></path>
+                </g>
+              </svg>
 
-            <svg
-              aria-label="moon"
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-            >
-              <g
-                strokeLinejoin="round"
-                strokeLinecap="round"
-                strokeWidth="2"
-                fill="none"
-                stroke="currentColor"
+              <svg
+                aria-label="moon"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
               >
-                <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path>
-              </g>
-            </svg>
-          </label>
+                <g
+                  strokeLinejoin="round"
+                  strokeLinecap="round"
+                  strokeWidth="2"
+                  fill="none"
+                  stroke="currentColor"
+                >
+                  <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path>
+                </g>
+              </svg>
+            </label>
+            {/* profile */}
+           <div
+      className="relative"
+      onClick={(e) => e.stopPropagation()}
+    >
+      {/* Avatar */}
+      {user?.photoURL ? (
+        <img
+          onClick={() => setShow(!show)}
+          title={user.displayName}
+          className="size-10 object-cover rounded-full border cursor-pointer"
+          src={user.photoURL}
+          alt="profile"
+        />
+      ) : (
+        <CgProfile
+          onClick={() => setShow(!show)}
+          size={40}
+          className="cursor-pointer"
+        />
+      )}
+
+      {/* Dropdown */}
+      {show && (
+        <div className="absolute right-0 mt-3 w-38 bg-base-100 border border-primary shadow-lg z-50 font-semibold">
+          <ul className="menu p-2 text-sm">
+            <li>
+              <Link to="/dashboard/profile" onClick={() => setShow(false)}>
+                Profile
+              </Link>
+            </li>
+
+            <li>
+              <Link to="/dashboard" onClick={() => setShow(false)}>
+                Dashboard
+              </Link>
+            </li>
+
+            <li>
+              <Link to="/" onClick={() => setShow(false)}>
+                Home
+              </Link>
+            </li>
+
+            <li className="border-t mt-1 pt-1">
+              <button
+                onClick={() => {
+                  logOut();
+                  setShow(false);
+                }}
+                className="rounded-none text-white bg-primary"
+              >
+                Logout
+              </button>
+            </li>
+          </ul>
+        </div>
+      )}
+    </div>
+          </div>
         </nav>
         {/* Page content here */}
         <div className="p-4">
@@ -153,7 +226,7 @@ const DashboardLayout = () => {
               <NavLink
                 to={"/dashboard/add-book"}
                 className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                data-tip="Homepage"
+                data-tip="Add Book"
               >
                 {/* Home icon */}
                 <BiBookAdd size={18} />
@@ -165,7 +238,7 @@ const DashboardLayout = () => {
               <NavLink
                 to={"/dashboard/my-books"}
                 className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                data-tip="Homepage"
+                data-tip="My Books"
               >
                 {/* Home icon */}
                 <LiaAddressBookSolid size={20} />
@@ -201,6 +274,7 @@ const DashboardLayout = () => {
           </ul>
         </div>
       </div>
+      <Toaster position="top-center" reverseOrder={false} />
     </div>
   );
 };
