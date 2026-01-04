@@ -13,6 +13,8 @@ const AddBook = () => {
     e.preventDefault();
     setLoading(true);
 
+
+
     const form = e.target;
     const newBook = {
       title: form.title.value,
@@ -133,6 +135,12 @@ const AddBook = () => {
               placeholder="Image URL"
               className="input bg-[#E8F0FE] w-full placeholder:text-accent"
             />
+            <input
+                name="coverImage"
+                type="file"
+                className="file-input w-full placeholder:text-accent"
+                placeholder="Enter Your Photo URL"
+              />
           </div>
 
           {/* Submit Button */}

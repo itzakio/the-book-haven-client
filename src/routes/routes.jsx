@@ -12,31 +12,63 @@ import UpdateBook from "../pages/UpdateBook";
 import ErrorRoutePage from "../components/ErrorRoutePage";
 import About from "../pages/About";
 import Terms from "../pages/Terms";
+import DashboardLayout from "../layouts/DashboardLayout";
+import DashboardHome from "../pages/Dashboard/DashboardHome";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <RootLayout />,
-    errorElement: <ErrorRoutePage/>,
+    errorElement: <ErrorRoutePage />,
     children: [
       {
         index: true,
         element: <Home />,
       },
       {
-        path: "/all-books",
+        path: "all-books",
         element: <AllBooks />,
       },
       {
-        path: "/about",
+        path: "about",
         element: <About />,
       },
       {
-        path: "/terms",
+        path: "terms",
         element: <Terms />,
       },
       {
-        path: "/add-book",
+        path: "book-details/:id",
+        element: <BookDetails />,
+      },
+      {
+        path: "update-book/:id",
+        element: (
+          <PrivateRoute>
+            <UpdateBook />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "login",
+        element: <Login />,
+      },
+      {
+        path: "register",
+        element: <Register />,
+      },
+    ],
+  },
+  {
+    path: "dashboard",
+    element: <DashboardLayout />,
+    children: [
+      {
+        index: true,
+        element: <DashboardHome/>
+      },
+      {
+        path: "add-book",
         element: (
           <PrivateRoute>
             <AddBook />
@@ -44,39 +76,19 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "/my-books",
+        path: "my-books",
         element: (
-            <PrivateRoute>
-                <MyBooks />
-            </PrivateRoute>
+          <PrivateRoute>
+            <MyBooks />
+          </PrivateRoute>
         ),
-      },
-      {
-        path: "/book-details/:id",
-        element: <BookDetails/>
-      },
-      {
-        path: "/update-book/:id",
-        element: (
-            <PrivateRoute>
-                <UpdateBook />
-            </PrivateRoute>
-        ),
-      },
-      {
-        path: "/login",
-        element: <Login />,
-      },
-      {
-        path: "/register",
-        element: <Register />,
       },
     ],
   },
   {
     path: "*",
-    element: <ErrorRoutePage/>
-  }
+    element: <ErrorRoutePage />,
+  },
 ]);
 
 export default router;

@@ -44,17 +44,14 @@ const Navbar = () => {
       <NavLink className="navLinks" to="/all-books">
         <LiaBookSolid size={16} /> All Books
       </NavLink>
-      <NavLink className="navLinks" to="/add-book">
-        <BiBookAdd size={16} /> Add Book
-      </NavLink>
-      <NavLink className="navLinks" to="/my-books">
-        <LiaAddressBookSolid size={16} /> My Books
-      </NavLink>
       <NavLink className="navLinks" to="/about">
         <FiInfo size={16} /> About
       </NavLink>
       <NavLink className="navLinks" to="/terms">
         <LiaFileContractSolid size={16} /> Terms
+      </NavLink>
+      <NavLink className="navLinks" to="/dashboard">
+        <LiaFileContractSolid size={16} /> Dashboard
       </NavLink>
     </>
   );
