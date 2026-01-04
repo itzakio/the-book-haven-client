@@ -36,10 +36,6 @@ const MyBooks = () => {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        // fetch(`http://localhost:3000/books/${id}`, {
-        //   method: "DELETE",
-        // })
-        //   .then((res) => res.json())
         axiosSecure
           .delete(`/books/${id}`)
           .then((data) => {
@@ -110,7 +106,7 @@ const MyBooks = () => {
               No Books Yet!
             </h2>
             <Link
-              to="/add-book"
+              to="dashboard/add-book"
               className="btn rounded-none btn-outline btn-primary"
             >
               Add Book

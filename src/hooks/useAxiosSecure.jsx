@@ -5,43 +5,8 @@ import { useEffect } from "react";
 // import { useEffect } from "react";
 
 const axiosSecure = axios.create({
-  baseURL: "http://localhost:3000",
+  baseURL: "https://the-book-haven-api.vercel.app",
 });
-
-// const useAxiosSecure = () => {
-//   const { user } = useAuth();
-
-//   useEffect(() => {
-//      const requestInterceptor = axiosInstance.interceptors.request.use((config) => {
-//       if(!user){
-//         return;
-//       }
-//       const token = user.accessToken;
-//       if(token){
-//         config.headers.authorization = `Bearer ${token}`;
-//       }
-//       return config;
-//     });
-
-//     return () => {
-//       axiosInstance.interceptors.request.eject(requestInterceptor);
-//     };
-//   }, [user]);
-
-//   return axiosInstance;
-// };
-
-// export default useAxiosSecure;
-
-
-// import axios from "axios";
-// import { useEffect } from "react";
-// import useAuth from "./useAuth";
-// import { useNavigate } from "react-router";
-
-// const axiosSecure = axios.create({
-//   baseURL: "http://localhost:3000",
-// });
 
 const useAxiosSecure = () => {
   const { user, logOutUser } = useAuth();

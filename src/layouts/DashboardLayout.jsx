@@ -147,7 +147,7 @@ const DashboardLayout = () => {
         <div className="absolute right-0 mt-3 w-38 bg-base-100 border border-primary shadow-lg z-50 font-semibold">
           <ul className="menu p-2 text-sm">
             <li>
-              <Link to="/dashboard/profile" onClick={() => setShow(false)}>
+              <Link to="/dashboard" onClick={() => setShow(false)}>
                 Profile
               </Link>
             </li>
