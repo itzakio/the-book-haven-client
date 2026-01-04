@@ -3,40 +3,69 @@ import toast from "react-hot-toast";
 import useAuth from "../hooks/useAuth";
 import Particles from "../components/Particles";
 import useAxiosSecure from "../hooks/useAxiosSecure";
+import axios from "axios";
 
 const AddBook = () => {
   const [loading, setLoading] = useState(false);
   const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
 
-  const handleAddBook = (e) => {
+  const handleAddBook = async (e) => {
     e.preventDefault();
     setLoading(true);
 
-
-
     const form = e.target;
-    const newBook = {
-      title: form.title.value,
-      author: form.author.value,
-      genre: form.genre.value,
-      rating: form.rating.value,
-      summary: form.summary.value,
-      coverImage: form.coverImage.value,
-      userEmail: user.email,
-      created_at: new Date().toISOString(),
-    };
+    const photo = form.coverImage.files[0];
 
-    axiosSecure
-      .post("/books", newBook)
-      .then((data) => {
-        if (data.data.insertedId) {
-          toast.success("Book added successfully!");
-          form.reset();
-        }
-      })
-      .catch(() => toast.error("Failed to add book!"))
-      .finally(() => setLoading(false));
+    // image validation
+    if (!photo) {
+      toast.error("Please select a profile image");
+      return;
+    }
+
+    if (!photo.type.startsWith("image/")) {
+      toast.error("Only image files are allowed");
+      return;
+    }
+
+    try {
+      // upload image
+      const formData = new FormData();
+      formData.append("image", photo);
+
+      const imageRes = await axios.post(
+        `https://api.imgbb.com/1/upload?key=${
+          import.meta.env.VITE_image_host_key
+        }`,
+        formData
+      );
+
+      const coverImage = imageRes.data.data.url;
+
+      const newBook = {
+        title: form.title.value,
+        author: form.author.value,
+        genre: form.genre.value,
+        rating: form.rating.value,
+        summary: form.summary.value,
+        coverImage,
+        userEmail: user.email,
+        created_at: new Date().toISOString(),
+      };
+
+      axiosSecure
+        .post("/books", newBook)
+        .then((data) => {
+          if (data.data.insertedId) {
+            toast.success("Book added successfully!");
+            form.reset();
+          }
+        })
+        .catch(() => toast.error("Failed to add book!"))
+        .finally(() => setLoading(false));
+    } catch (error) {
+      toast.error(error.message || "Something went wrong. Please try again.");
+    }
   };
 
   return (
@@ -126,21 +155,20 @@ const AddBook = () => {
           {/* Cover Image */}
           <div className="form-control">
             <label className="text-base label font-semibold">
-              Cover Image URL
+              Cover Image
             </label>
-            <input
+            {/* <input
               type="text"
               name="coverImage"
               required
               placeholder="Image URL"
               className="input bg-[#E8F0FE] w-full placeholder:text-accent"
-            />
+            /> */}
             <input
-                name="coverImage"
-                type="file"
-                className="file-input w-full placeholder:text-accent"
-                placeholder="Enter Your Photo URL"
-              />
+              name="coverImage"
+              type="file"
+              className="file-input w-full placeholder:text-accent"
+            />
           </div>
 
           {/* Submit Button */}
