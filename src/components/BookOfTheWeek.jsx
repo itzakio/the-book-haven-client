@@ -37,7 +37,7 @@ const bookOfTheWeek = [
 
 const BookOfTheWeek = () => {
   return (
-    <section className="max-w-7xl mx-auto px-6 py-12">
+    <section className="max-w-[1440px] mx-auto px-6 xl:px-0 py-12">
       <h2 className="headline">
         Book of the Week
       </h2>

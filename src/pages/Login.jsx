@@ -5,12 +5,14 @@ import { Link, useLocation, useNavigate } from "react-router";
 import Particles from "../components/Particles";
 import useAuth from "../hooks/useAuth";
 import toast from "react-hot-toast";
+import useAxiosSecure from "../hooks/useAxiosSecure";
 
 const Login = () => {
   const { logIn, googleSignIn, setUser } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
   const [show, setShow] = useState(false);
+  const axiosSecure = useAxiosSecure();
 
   const loginHandler = (e) => {
     e.preventDefault();
@@ -52,17 +54,26 @@ const Login = () => {
       });
   };
 
-  const googleSignInHandler = () => {
-    googleSignIn()
-      .then((result) => {
-        const user = result.user;
-        setUser(user);
-        toast.success("SignUp successfully");
-        navigate(`${location.state ? location.state : "/"}`);
-      })
-      .catch((error) => {
-        toast.error(error.message || "Something went wrong. Please try again.");
-      });
+  const googleSignInHandler = async () => {
+    try {
+      const result = await googleSignIn();
+      const user = result.user;
+
+      setUser(user);
+      toast.success("Sign in successful");
+
+      const user_info = {
+        email: user.email,
+        name: user.displayName,
+        photoURL: user.photoURL,
+      };
+
+      await axiosSecure.post("/users", user_info);
+
+      navigate(location.state || "/");
+    } catch (error) {
+      toast.error(error.message || "Something went wrong. Please try again.");
+    }
   };
 
   return (

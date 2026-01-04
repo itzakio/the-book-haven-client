@@ -10,6 +10,8 @@ import PrivateRoute from "./PrivateRoute";
 import BookDetails from "../pages/BookDetails";
 import UpdateBook from "../pages/UpdateBook";
 import ErrorRoutePage from "../components/ErrorRoutePage";
+import About from "../pages/About";
+import Terms from "../pages/Terms";
 
 const router = createBrowserRouter([
   {
@@ -24,6 +26,14 @@ const router = createBrowserRouter([
       {
         path: "/all-books",
         element: <AllBooks />,
+      },
+      {
+        path: "/about",
+        element: <About />,
+      },
+      {
+        path: "/terms",
+        element: <Terms />,
       },
       {
         path: "/add-book",
@@ -43,11 +53,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/book-details/:id",
-        element: (
-            <PrivateRoute>
-                <BookDetails />
-            </PrivateRoute>
-        ),
+        element: <BookDetails/>
       },
       {
         path: "/update-book/:id",

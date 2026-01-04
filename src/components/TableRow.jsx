@@ -4,7 +4,7 @@ import { Link } from 'react-router';
 const TableRow = ({book, index}) => {
     return (
         <tr className="hover">
-                <th>{index + 1}</th>
+                <th>{index }</th>
 
                 <td>
                   <img

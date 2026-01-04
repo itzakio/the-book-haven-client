@@ -1,15 +1,15 @@
 import { useEffect, useState } from "react";
-import { BiSolidBookAdd } from "react-icons/bi";
+import { BiBookAdd, BiSolidBookAdd } from "react-icons/bi";
 import { CgProfile } from "react-icons/cg";
-import { MdHome } from "react-icons/md";
-import { PiAddressBookFill } from "react-icons/pi";
-import { RiBookShelfFill, RiMenuFill } from "react-icons/ri";
-import { TiHome } from "react-icons/ti";
+import {  RiMenuFill } from "react-icons/ri";
 import { Link, NavLink } from "react-router";
 import logo from "/logo.png";
 import { RxCrossCircled } from "react-icons/rx";
 import useAuth from "../hooks/useAuth";
 import toast from "react-hot-toast";
+import { FiInfo } from "react-icons/fi";
+import { LiaAddressBookSolid, LiaBookSolid, LiaFileContractSolid } from "react-icons/lia";
+import { GoHome } from "react-icons/go";
 
 const Navbar = () => {
   const { user, logOut } = useAuth();
@@ -38,17 +38,23 @@ const Navbar = () => {
   const links = (
     <>
       <NavLink className="navLinks" to="/">
-        <MdHome size={20} />
+        <GoHome size={16} />
         Home
       </NavLink>
       <NavLink className="navLinks" to="/all-books">
-        <RiBookShelfFill size={20} /> All Books
+        <LiaBookSolid size={16} /> All Books
       </NavLink>
       <NavLink className="navLinks" to="/add-book">
-        <BiSolidBookAdd size={20} /> Add Book
+        <BiBookAdd size={16} /> Add Book
       </NavLink>
       <NavLink className="navLinks" to="/my-books">
-        <PiAddressBookFill size={20} /> My Books
+        <LiaAddressBookSolid size={16} /> My Books
+      </NavLink>
+      <NavLink className="navLinks" to="/about">
+        <FiInfo size={16} /> About
+      </NavLink>
+      <NavLink className="navLinks" to="/terms">
+        <LiaFileContractSolid size={16} /> Terms
       </NavLink>
     </>
   );
@@ -59,7 +65,7 @@ const Navbar = () => {
           <div className="flex gap-1 items-center">
             <img className="size-12" src={logo} alt="" />
             <div className="hidden md:block">
-              <h3 className="text-xl text-primary font-bold signika-font">
+              <h3 className="text-xl text-primary font-bold ">
                 The Book Haven
               </h3>
               <p className="text-xs text-gray-500">
@@ -69,7 +75,7 @@ const Navbar = () => {
           </div>
         </div>
         <div className="navbar-center hidden lg:flex">
-          <ul className="menu menu-horizontal px-1 hidden xl:flex signika-font ">
+          <ul className="menu menu-horizontal px-1 hidden xl:flex  ">
             {links}
             {/* main links */}
           </ul>
