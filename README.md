@@ -30,3 +30,7 @@ Discover beautifully curated collections, explore new favorites, and enjoy distr
 - Optional: Libraries for UI components (daisyUI, React Icon, React Hot Toast, SwiperJS, Sweet Alert 2, UiVerse )
 
 Live Link: https://the-book-haven-c4496.web.app
+
+**Homepage:**
+
+<img src="https://i.ibb.co.com/DHFyCf3D/thebookhaven.png" alt="The Book Haven" style="width:100%;" />
